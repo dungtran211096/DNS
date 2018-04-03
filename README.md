@@ -1,0 +1,2 @@
+# DNS
+Document for DNS
