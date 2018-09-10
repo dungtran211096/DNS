@@ -31,16 +31,12 @@ class IpLookUp(object):
         list = ReadFile().read_file()
         ip_addr = self.is_ip_valid()
         for add in list:
-            H[add[1]] = add[0]
-            net = ipaddress.ip_network(H[add[1]])
+            H[add[0]] = add[1]
+            net = ipaddress.ip_network(add[0])
 
             if ip_addr in net:
-                return H[add[1]], add[1]
+                return H[add[0]]
 
-        for add in list
-
-            if ip in ipaddress.ip_network(add[0]):
-                return add[1]
 
 
 
