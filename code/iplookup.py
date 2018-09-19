@@ -2,11 +2,17 @@ import ipaddress
 from readfile import ReadFile
 from hash import CuckooHash
 
-H = CuckooHash(20000)
+H = CuckooHash(2000)
 
+import timeit
+
+
+def insert_to_hash():
+    lists = ReadFile("/media/dung/Dung Tran/GSLB/geoip_data.dat").read_file()
+    for i in lists:
+        H[i[0]] = i[1]
 
 class IpLookUp(object):
-
     def __init__(self, address):
         self.address = address
 
@@ -21,29 +27,27 @@ class IpLookUp(object):
         except ValueError:
             return None
 
-    def insert_to_hash(self):
-        lists = ReadFile("/media/dung/Dung Tran/GSLB/geoip_data.dat").read_file()
-
-        for i in lists:
-            H[i[0]] = i[1]
+    def distance(self, ip1):
+        list = []
+        ip1 = self.is_ip_valid()
+        for i in H.keys():
+            x = abs(int(ip1) - int(ipaddress.ip_interface(i)))
+            list.append(x)
+        return list
 
     def ip_range(self):
         """
         From list keys in hash table return finding value-key pair
+        :param ip_addr : ip looks up
         :return:
         """
-
-        self.insert_to_hash()
+        insert_to_hash()
         ip_addr = self.is_ip_valid()
-
         for i in H.keys():
-            # if ip_addr in ipaddress.ip_network(i):
-            #     return i, H[i]
-            if i == "203.119.8.0/22":
-                return H[i]
-
-ip = '203.119.8.1/24'
-
-
-print(IpLookUp(ip).ip_range())
-# print(H.keys())
+            if ip_addr in ipaddress.ip_network(i, False):
+                return i, H[i]
+                pass
+            else:
+                m = min(self.distance(ip_addr))
+                index = self.distance(ip_addr).index(m)
+                return H[H.keys()[index]], H.keys()[index]
