@@ -35,11 +35,22 @@ class TestIpLookUp(unittest.TestCase):
         ip6 = "118.68.0.0/15"
         ip7 = "221.134.8.1/24"
         ip8 = "221.132.30.0/23"
+        ip9 = "203.119.0.1/24"
+        ip10 = "203.119.0.0/23"
+        ip11 = "203.119.50/24"
+        ip12 = "203.119.0.0/23"
+        ip13= "192.168.0.0/26"  
+        ip14 = "192.168.20.19/24"
         self.assertEqual(IpLookUp(ip1).ip_range(), IpLookUp(ip2).ip_range())
         self.assertEqual(IpLookUp(ip3).ip_range(), IpLookUp(ip4).ip_range())
         self.assertNotEqual(IpLookUp(ip5).ip_range(), IpLookUp(ip6).ip_range())
         self.assertEqual(IpLookUp(ip7).ip_range(), IpLookUp(ip8).ip_range())
+        self.assertEqual(IpLookUp(ip9).ip_range(), IpLookUp(ip10).ip_range())
+        self.assertEqual(IpLookUp(ip13).ip_range(), IpLookUp(ip14).ip_range())
 
+    def test_longest_prefix(self):
+        ip1 = "203.119.58.1/24"
+        print("Longest_prefix: %s " % IpLookUp(ip1).ip_range())
 
 if __name__ == '__main__':
     unittest.main()
