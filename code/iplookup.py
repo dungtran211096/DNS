@@ -1,5 +1,5 @@
 import ipaddress
-from readfile import ReadFile
+import readfile
 from hash import CuckooHash
 
 H = CuckooHash(2000)
