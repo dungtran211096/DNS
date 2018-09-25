@@ -1,0 +1,42 @@
+#
+# Example configuration
+#
+pools:
+    www.vega.com:
+        monitor: http
+        monitor_params:
+            port : 80
+	    timeout : 1
+        lb_method: twrr 
+        fallback: any
+        members:
+        - ip: 45.64.64.116
+          name: www1
+          weight: 1
+        - ip: 46.64.64.113
+          name: www2
+          weight: 1
+  
+   www.vega.com:
+        monitor: http
+        monitor_params:
+            port: 80
+            timeout: 1
+        lb_method: twrr
+        fallback: any
+        members:
+        - ip: 45.64.64.116
+          name: www1
+          weight: 1
+        - ip: 46.64.64.113
+          name: www2
+          weight: 1
+
+globalnames:
+    www.vega.com
+        pool: www-vega
+        ttl: 1
+    www2.vega.com:
+	pool: www2-vega
+	ttl: 1
+
